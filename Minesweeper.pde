@@ -16,6 +16,8 @@ void setup ()
     for (int c= 0; c<NUM_COLS; c++) {
       buttons[r][c] = new MSButton(r, c);
     }
+    for(int i = 0; i < 5; i++)
+        setMines();
   }
 
 
@@ -28,7 +30,6 @@ public void setMines()
   int col = (int)(Math.random()*NUM_COLS-1);
   if (!mines.contains(buttons[row][col])) {
     mines.add(buttons[row][col]);
-    System.out.println(row + ","+ col);
   }
 }
 
@@ -37,10 +38,18 @@ public void draw ()
   background( 0 );
   if (isWon() == true)
     displayWinningMessage();
+    noLoop();
 }
 public boolean isWon()
 {
-  //your code here
+   for(int i = 0; i < mines.size(); i++)
+        if(!mines.get(i).isMarked())
+            return false;
+    for(int r = 0; r < NUM_ROWS; r++)
+        for(int c = 0; c < NUM_COLS; c++)
+            if(!bombs.contains(buttons[r][c]))
+                if(!buttons[r][c].isClicked())
+          
   return false;
 }
 public void displayLosingMessage()
@@ -159,4 +168,5 @@ public class MSButton
       return flagged;
     }
   }
+
 
